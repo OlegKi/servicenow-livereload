@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>LiveReload Check</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    // implement resource here
+	var records = request.body.data;
+	var time_check = request.queryParams.time;
+	
+	// check the ui page itself...
+	var ui_page = new GlideRecord('sys_ui_page');
+	ui_page.addQuery('sys_id',records.ui_page);
+	ui_page.addQuery('sys_updated_on','>=', time_check);
+	ui_page.query();
+	if (ui_page.hasNext())
+		return '1';
+	
+	// check for the script includes
+	var ui_script = new GlideRecord('sys_ui_script');
+	ui_script.addQuery('name','IN', records.ui_scripts.join(','));
+	ui_script.addQuery('sys_updated_on','>=', time_check);
+	ui_script.query();
+	if (ui_script.hasNext())
+		return '1';
+	
+	// check for the stylesheets
+	var sheets = new GlideRecord('content_css');
+	sheets.addQuery('sys_id','IN',records.style_sheets.join(','));
+	sheets.addQuery('sys_updated_on','>=', time_check);
+	sheets.query();
+	if (sheets.hasNext())
+		return '1';
+	
+	return '0';
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_80477_livereload/livereload</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>false</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2016-11-22 15:26:33</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>2a31f1b4db132200d2a3d740cf961955</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>LiveReload Check</sys_name>
+        <sys_package display_value="LiveReload" source="x_80477_livereload">7d1179f0db132200d2a3d740cf9619b3</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="LiveReload">7d1179f0db132200d2a3d740cf9619b3</sys_scope>
+        <sys_update_name>sys_ws_operation_2a31f1b4db132200d2a3d740cf961955</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2016-11-22 15:26:33</sys_updated_on>
+        <web_service_definition display_value="LiveReload">3121b1b4db132200d2a3d740cf9619c2</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

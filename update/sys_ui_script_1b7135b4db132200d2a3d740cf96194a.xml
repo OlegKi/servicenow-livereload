@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>UI Page LiveReload UI Script. Add this script to your UI Page. It will live reload the page when it detects that the ui page, any jelly included scripts, or css changes. Add the following code to the bottom of your UI Page.&#13;
+&#13;
+&lt;g:requires name="x_{your_company_code}_livereload.ui_page_livereload.jsdbx?page={sys_id_of_ui_page}" /&gt;&#13;
+</description>
+        <global>false</global>
+        <name>x_80477_livereload.ui_page_livereload</name>
+        <script><![CDATA[(function(){
+	
+var records = {
+	ui_page: '',
+	ui_scripts: [],
+	style_sheets: []
+};
+
+
+var scope = '';
+	
+// get all scripts...but only the ui scripts that the developer includes...
+var scripts = document.getElementsByTagName('body')[0].getElementsByTagName('script');
+var filtered = [];
+for (var i=0; i < scripts.length; i++){
+	var script = scripts[i];
+	if (typeof script.src != 'undefined' && script.src != '' && script.src.indexOf('.jsdbx') > -1){
+		if (script.src.indexOf('ui_page_livereload') > 0){
+			scope = script.src.split('/')[3].split('.')[0];
+			var r = /page=(.+)?(?=x\?v)/g;
+			var m;
+			while ((m = r.exec(script.src)) !== null) {
+				if (m.index === r.lastIndex) r.lastIndex++;
+				records.ui_page = m[1];
+			}
+		} else {
+			var r = /.service-now.com\/(.*).jsdbx/g;
+			var m;
+			while ((m = r.exec(script.src)) !== null) {
+				if (m.index === r.lastIndex) r.lastIndex++;
+				records.ui_scripts.push(m[1]);
+			}
+		}
+	}
+	
+}
+
+
+// get all css files...
+var files = document.getElementsByTagName('body')[0].getElementsByTagName('link');
+for (var i=0; i < files.length; i++){
+	var file = files[i];
+	if (typeof file.href != 'undefined' && file.href != '' && file.href.indexOf('.cssdbx') > -1){
+		var r = /.service-now.com\/(.*).cssdbx/g;
+		var m;
+		while ((m = r.exec(file.href)) !== null) {
+			if (m.index === r.lastIndex) r.lastIndex++;
+			records.style_sheets.push(m[1]);
+		}
+	}
+}
+
+
+localStorage['livereload_timecheck'] = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+// was the sys_id set by jelly?
+if (typeof document['sys_id'] !== 'undefined' && document['sys_id'] != '')
+	records.ui_page = document['sys_id'];
+
+// is there a ui page sys_id?
+if (records.ui_page !== ''){
+	
+	var in_call = false;
+	// check for updates...
+	window.setInterval(function(){
+		
+		if (in_call) return;
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4){
+			  in_call = false;
+			  if (this.status == 200) {
+				  var result = JSON.parse(this.responseText).result;
+				  if (result != '0') location.reload();
+			  }
+			}
+		};
+
+		xhttp.open("POST", "/api/" + scope + "/livereload?time=" + localStorage['livereload_timecheck'], true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send(JSON.stringify(records));
+		in_call = true;
+		
+	},2500);
+}
+
+console.log("Livereload: " + localStorage['livereload_timecheck']);
+	
+})();
+]]></script>
+        <script_name>ui_page_livereload</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2016-11-22 15:39:06</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>1b7135b4db132200d2a3d740cf96194a</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>x_80477_livereload.ui_page_livereload</sys_name>
+        <sys_package display_value="LiveReload" source="x_80477_livereload">7d1179f0db132200d2a3d740cf9619b3</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="LiveReload">7d1179f0db132200d2a3d740cf9619b3</sys_scope>
+        <sys_update_name>sys_ui_script_1b7135b4db132200d2a3d740cf96194a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2016-11-22 18:55:33</sys_updated_on>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>
