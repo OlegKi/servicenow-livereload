@@ -11,19 +11,19 @@
         <private>false</private>
         <restrict_table_access>false</restrict_table_access>
         <runtime_access_tracking/>
-        <scope>x_80477_livereload</scope>
+        <scope>x_ngrove_livereloa</scope>
         <scoped_administration>false</scoped_administration>
         <short_description>Provides live reload capabilities to your custom UI Pages for development.</short_description>
-        <source>x_80477_livereload</source>
+        <source>x_ngrove_livereload</source>
         <store_correlation_id/>
         <store_url/>
         <sys_class_name>sys_app</sys_class_name>
         <sys_code/>
-        <sys_created_by>admin</sys_created_by>
+        <sys_created_by>ngrove</sys_created_by>
         <sys_created_on>2016-11-22 15:25:10</sys_created_on>
         <sys_id>7d1179f0db132200d2a3d740cf9619b3</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_by>ngrove</sys_updated_by>
         <sys_updated_on>2016-11-23 15:35:46</sys_updated_on>
         <template/>
         <trackable>true</trackable>

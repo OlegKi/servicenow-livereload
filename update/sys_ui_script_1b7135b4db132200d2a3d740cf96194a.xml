@@ -4,10 +4,10 @@
         <active>true</active>
         <description>UI Page LiveReload UI Script. Add this script to your UI Page. It will live reload the page when it detects that the ui page, any jelly included scripts, or css changes. Add the following code to the bottom of your UI Page.&#13;
 &#13;
-&lt;g:requires name="x_{your_company_code}_livereload.ui_page_livereload.jsdbx?page={sys_id_of_ui_page}" /&gt;&#13;
+&lt;g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx" /&gt;&#13;
 </description>
         <global>false</global>
-        <name>x_80477_livereload.ui_page_livereload</name>
+        <name>x_ngrove_livereload.ui_page_livereload</name>
         <script><![CDATA[(function(){
 	
 var records = {
@@ -16,8 +16,6 @@ var records = {
 	style_sheets: []
 };
 
-
-var scope = '';
 	
 // get all scripts...but only the ui scripts that the developer includes...
 var scripts = document.getElementsByTagName('body')[0].getElementsByTagName('script');
@@ -26,7 +24,6 @@ for (var i=0; i < scripts.length; i++){
 	var script = scripts[i];
 	if (typeof script.src != 'undefined' && script.src != '' && script.src.indexOf('.jsdbx') > -1){
 		if (script.src.indexOf('ui_page_livereload') > 0){
-			scope = script.src.split('/')[3].split('.')[0];
 			var r = /page=(.+)?(?=x\?v)/g;
 			var m;
 			while ((m = r.exec(script.src)) !== null) {
@@ -87,7 +84,7 @@ if (records.ui_page !== ''){
 			}
 		};
 
-		xhttp.open("POST", "/api/" + scope + "/livereload?time=" + localStorage['livereload_timecheck'], true);
+		xhttp.open("POST", "/api/x_ngrove_livereload/livereload?time=" + localStorage['livereload_timecheck'], true);
 		xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(JSON.stringify(records));
 		in_call = true;
@@ -101,19 +98,19 @@ console.log("Livereload: " + localStorage['livereload_timecheck']);
 ]]></script>
         <script_name>ui_page_livereload</script_name>
         <sys_class_name>sys_ui_script</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
+        <sys_created_by>ngrove</sys_created_by>
         <sys_created_on>2016-11-22 15:39:06</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>1b7135b4db132200d2a3d740cf96194a</sys_id>
-        <sys_mod_count>6</sys_mod_count>
-        <sys_name>x_80477_livereload.ui_page_livereload</sys_name>
-        <sys_package display_value="LiveReload" source="x_80477_livereload">7d1179f0db132200d2a3d740cf9619b3</sys_package>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>x_ngrove_livereload.ui_page_livereload</sys_name>
+        <sys_package display_value="LiveReload" source="x_ngrove_livereload">7d1179f0db132200d2a3d740cf9619b3</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="LiveReload">7d1179f0db132200d2a3d740cf9619b3</sys_scope>
         <sys_update_name>sys_ui_script_1b7135b4db132200d2a3d740cf96194a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2016-11-22 18:55:33</sys_updated_on>
+        <sys_updated_on>2017-03-16 20:33:35</sys_updated_on>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
 </record_update>
