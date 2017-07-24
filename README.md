@@ -1,12 +1,3 @@
-# ServiceNow Live Reload
-This application can be installed on your ServiceNow instance to provide live reload capabilities to UI Pages/etc when it detects something has changed on the server.
-
-## Usage
-You must include the following tag on your page to load up the script that does live checking.
-<g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx" />
-
-The script polls ServiceNow for any file change, this includes UI Pages, Client Scripts, UI Scripts, and CSS files.
-
 # Generated files
 This repository contains generated files and a checksum.
 
