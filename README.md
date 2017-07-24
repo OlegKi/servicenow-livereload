@@ -3,7 +3,8 @@ This application can be installed on your ServiceNow instance to provide live re
 
 ## Usage
 You must include the following tag on your page to load up the script that does live checking.
-<g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx" />
+
+`<g:requires name="x_ngrove_livereload.ui_page_livereload.jsdbx" />`
 
 The script polls ServiceNow for any file change, this includes UI Pages, Client Scripts, UI Scripts, and CSS files.
 
